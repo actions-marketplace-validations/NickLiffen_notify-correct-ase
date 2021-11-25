@@ -12,7 +12,6 @@ const run = async (): Promise<void> => {
 
     console.log(issueBody);
     console.log(fileURI);
-
     const doc = load(readFileSync(fileURI, "utf8"), {
       json: true,
     }) as file;
