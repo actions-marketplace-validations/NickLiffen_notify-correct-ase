@@ -5696,16 +5696,13 @@ const run = async () => {
     try {
         const issueBody = core.getInput("issueBody", { required: true });
         const fileURI = core.getInput("fileURI", { required: true });
-        console.log(issueBody);
-        console.log(fileURI);
         const doc = (0, js_yaml_1.load)((0, fs_1.readFileSync)(fileURI, "utf8"), {
             json: true,
         });
-        console.log(doc);
         const inputRegion = await (0, utils_1.parse)(issueBody);
         const [approvers, label] = await (0, utils_1.filter)(inputRegion, doc);
-        console.log(approvers);
-        console.log(label);
+        core.setOutput("labelOfRegionToAssignToIssue", label);
+        core.setOutput("githubHandlesOfPeopleToBeNotified", approvers);
     }
     catch (e) {
         console.log(e);
@@ -5724,13 +5721,8 @@ run();
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.filter = void 0;
-function sanitizeString(str) {
-    str = str.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "");
-    return str.trim();
-}
 const filter = async (region, file) => {
-    const newInput = sanitizeString(region);
-    console.log("newInput", newInput);
+    const newInput = region.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "").trim();
     const newArray = file.find((r) => r.salesforceName === newInput);
     if (newArray) {
         const approvers = newArray.approvers.join(", ");
