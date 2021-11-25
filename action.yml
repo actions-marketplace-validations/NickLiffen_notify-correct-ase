@@ -14,7 +14,7 @@ outputs:
   githubHandlesOfPeopleToBeNotified:
     description: 'The GitHub handles who should be notified'
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'dist/index.js'
 branding:
   icon: 'target'  
