@@ -1,13 +1,18 @@
-name: 'Action Name'
+name: 'Find People to Notify Per Region'
 author: 'NickLiffen'
-description: 'Action Description'
+description: 'A region that parses the object from Salesforce and spits out people to notify'
 inputs:
-  inputName:
-    description: 'Input Description'
+  issueBody:
+    description: 'The body of the GitHub Issue which Salesforce Raised'
+    required: true
+  fileURI:
+    description: 'The relative URI path to the yml file storing approvals and notifications people'
     required: true
 outputs:
-  outputName:
-    description: 'Output Description'
+  labelOfRegionToAssignToIssue:
+    description: 'The region label to be assigned to the issue'
+  githubHandlesOfPeopleToBeNotified:
+    description: 'The GitHub handles who should be notified'
 runs:
   using: 'node16'
   main: 'dist/index.js'

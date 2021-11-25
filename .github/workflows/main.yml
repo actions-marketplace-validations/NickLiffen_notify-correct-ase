@@ -1,0 +1,19 @@
+name: "Tests"
+on: [push]
+jobs:
+  integ:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+      - name: Test to see if it works
+        uses: ./
+        with:
+          issueBody: "### Region proof of concept being driven from\n\nAMER-Enterprise-Central\n\n### Sales"
+          fileURI: "./example-inputs/file.yml"
