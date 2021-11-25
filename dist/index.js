@@ -5730,6 +5730,7 @@ function sanitizeString(str) {
 }
 const filter = async (region, file) => {
     const newInput = sanitizeString(region);
+    console.log("newInput", newInput);
     const newArray = file.find((r) => r.salesforceName === newInput);
     if (newArray) {
         const approvers = newArray.approvers.join(", ");
