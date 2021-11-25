@@ -5694,8 +5694,8 @@ const utils_1 = __nccwpck_require__(252);
 const core = __importStar(__nccwpck_require__(186));
 const run = async () => {
     try {
-        const issueBody = core.getInput('issueBody', { required: true });
-        const fileURI = core.getInput('issueBody', { required: true });
+        const issueBody = core.getInput("issueBody", { required: true });
+        const fileURI = core.getInput("issueBody", { required: true });
         console.log(issueBody);
         console.log(fileURI);
         const doc = (0, js_yaml_1.load)((0, fs_1.readFileSync)(fileURI, "utf8"), {
@@ -5725,7 +5725,7 @@ run();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.filter = void 0;
 function sanitizeString(str) {
-    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "");
+    str = str.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "");
     return str.trim();
 }
 const filter = async (region, file) => {
@@ -5766,14 +5766,9 @@ Object.defineProperty(exports, "filter", ({ enumerable: true, get: function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parse = void 0;
 const parse = async (input) => {
-    try {
-        const newstring = input.replace(/(\r\n|\n|\r)/gm, "");
-        const [, x] = new RegExp("from(.*)Sales").exec(newstring);
-        return x.replace("###", "");
-    }
-    catch (e) {
-        throw e;
-    }
+    const newstring = input.replace(/(\r\n|\n|\r)/gm, "");
+    const [, x] = new RegExp("from(.*)Sales").exec(newstring);
+    return x.replace("###", "");
 };
 exports.parse = parse;
 
