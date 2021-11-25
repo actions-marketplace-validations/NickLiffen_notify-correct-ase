@@ -1,14 +1,8 @@
-function sanitizeString(str: string) {
-  str = str.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "");
-  return str.trim();
-}
-
 export const filter = async (
   region: string,
   file: file
 ): Promise<filteredData> => {
-  const newInput = sanitizeString(region);
-  console.log("newInput", newInput);
+  const newInput = region.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "").trim();
   const newArray = file.find((r) => r.salesforceName === newInput);
 
   if (newArray) {

@@ -13,7 +13,12 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
       - name: Test to see if it works
+        id: test
         uses: ./
         with:
           issueBody: "### Region proof of concept being driven from\n\nAMER-Enterprise-Central\n\n### Sales"
           fileURI: ".github/workflows/example-inputs/file.yml"
+      - name: See Results
+        run: |
+          echo ${{ steps.test.outputs.labelOfRegionToAssignToIssue }}
+          echo ${{ steps.test.outputs.githubHandlesOfPeopleToBeNotified }}
