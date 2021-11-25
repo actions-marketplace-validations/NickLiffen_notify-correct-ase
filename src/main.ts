@@ -8,7 +8,7 @@ import * as core from "@actions/core";
 const run = async (): Promise<void> => {
   try {
     const issueBody = core.getInput("issueBody", { required: true });
-    const fileURI = core.getInput("issueBody", { required: true });
+    const fileURI = core.getInput("fileURI", { required: true });
 
     console.log(issueBody);
     console.log(fileURI);

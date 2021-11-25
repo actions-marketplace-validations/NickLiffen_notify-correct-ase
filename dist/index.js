@@ -5695,7 +5695,7 @@ const core = __importStar(__nccwpck_require__(186));
 const run = async () => {
     try {
         const issueBody = core.getInput("issueBody", { required: true });
-        const fileURI = core.getInput("issueBody", { required: true });
+        const fileURI = core.getInput("fileURI", { required: true });
         console.log(issueBody);
         console.log(fileURI);
         const doc = (0, js_yaml_1.load)((0, fs_1.readFileSync)(fileURI, "utf8"), {
