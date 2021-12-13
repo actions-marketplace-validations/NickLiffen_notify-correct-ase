@@ -5694,7 +5694,7 @@ const utils_1 = __nccwpck_require__(252);
 const core = __importStar(__nccwpck_require__(186));
 const run = async () => {
     try {
-        const { region } = JSON.parse(core.getInput("issueBodyPayload", { required: false }));
+        const { region } = JSON.parse(core.getInput("issueBody", { required: false }));
         console.log(`We found the following region in the issue: ${region}`);
         const fileURI = core.getInput("fileURI", { required: true });
         const doc = (0, js_yaml_1.load)((0, fs_1.readFileSync)(fileURI, "utf8"), {
