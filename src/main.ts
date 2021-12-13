@@ -8,7 +8,7 @@ import * as core from "@actions/core";
 const run = async (): Promise<void> => {
   try {
     const { region } = JSON.parse(
-      core.getInput("issueBodyPayload", { required: false })
+      core.getInput("issueBody", { required: false })
     ) as IssueBodyTemplate;
 
     console.log(`We found the following region in the issue: ${region}`);

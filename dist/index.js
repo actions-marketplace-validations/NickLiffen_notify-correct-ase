@@ -5694,13 +5694,16 @@ const utils_1 = __nccwpck_require__(252);
 const core = __importStar(__nccwpck_require__(186));
 const run = async () => {
     try {
-        const issueBody = core.getInput("issueBody", { required: true });
+        const { region } = JSON.parse(core.getInput("issueBodyPayload", { required: false }));
+        console.log(`We found the following region in the issue: ${region}`);
         const fileURI = core.getInput("fileURI", { required: true });
         const doc = (0, js_yaml_1.load)((0, fs_1.readFileSync)(fileURI, "utf8"), {
             json: true,
         });
-        const inputRegion = await (0, utils_1.parse)(issueBody);
-        const [approvers, label] = await (0, utils_1.filter)(inputRegion, doc);
+        console.log(`We are checking the region: ${region} against the following dataset: `, doc);
+        const [approvers, label] = await (0, utils_1.filter)(region, doc);
+        console.log(`The following people will get notified to approve the issue: ${approvers}`);
+        console.log(`The following label will be applied to the issue: ${label}`);
         core.setOutput("labelOfRegionToAssignToIssue", label);
         core.setOutput("githubHandlesOfPeopleToBeNotified", approvers);
     }
@@ -5722,11 +5725,10 @@ run();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.filter = void 0;
 const filter = async (region, file) => {
-    const newInput = region.replace(/[^a-z0-9áéíóúñü ,_-]/gim, "").trim();
-    const newArray = file.find((r) => r.salesforceName === newInput);
-    if (newArray) {
-        const approvers = newArray.approvers.join(", ");
-        const label = newArray.label;
+    const arr = file.find((r) => r.salesforceName === region);
+    if (arr) {
+        const approvers = arr.approvers.join(", ");
+        const label = arr.label;
         return [approvers, label];
     }
     throw new Error(`The region sent from Salesforce did not match a local record. The value from salesforce was: ${region}`);
@@ -5742,28 +5744,9 @@ exports.filter = filter;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.filter = exports.parse = void 0;
-const parseInputString_1 = __nccwpck_require__(646);
-Object.defineProperty(exports, "parse", ({ enumerable: true, get: function () { return parseInputString_1.parse; } }));
+exports.filter = void 0;
 const filter_1 = __nccwpck_require__(284);
 Object.defineProperty(exports, "filter", ({ enumerable: true, get: function () { return filter_1.filter; } }));
-
-
-/***/ }),
-
-/***/ 646:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parse = void 0;
-const parse = async (input) => {
-    const newstring = input.replace(/(\r\n|\n|\r)/gm, "");
-    const [, x] = new RegExp("from(.*)Sales").exec(newstring);
-    return x.replace("###", "");
-};
-exports.parse = parse;
 
 
 /***/ }),
